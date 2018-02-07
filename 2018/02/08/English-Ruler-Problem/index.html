@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    
+    <title>English Ruler Problem | Memorial Library</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+        <meta name="keywords" content="" />
+    
+    <meta name="description" content="DS 수업 시간에 배운 English Ruler Problem을 Recursive한 방법으로 풀어보자. 수업시간엔 Java로 풀었지만, 복습 과정에선 알고리즘 구현을 우선순위에 두고 있으므로 Python을 사용해 문제를 해결했다. 이 문제의 핵심은 길이 L인 눈금을 기준으로, 위 아래에 길이가 L-1인 Interval이 와야 한다는 것이다. 이 때 길이가">
+<meta property="og:type" content="article">
+<meta property="og:title" content="English Ruler Problem">
+<meta property="og:url" content="https://leesh6796.github.io/2018/02/08/English-Ruler-Problem/index.html">
+<meta property="og:site_name" content="Memorial Library">
+<meta property="og:description" content="DS 수업 시간에 배운 English Ruler Problem을 Recursive한 방법으로 풀어보자. 수업시간엔 Java로 풀었지만, 복습 과정에선 알고리즘 구현을 우선순위에 두고 있으므로 Python을 사용해 문제를 해결했다. 이 문제의 핵심은 길이 L인 눈금을 기준으로, 위 아래에 길이가 L-1인 Interval이 와야 한다는 것이다. 이 때 길이가">
+<meta property="og:locale" content="ko">
+<meta property="og:image" content="https://leesh6796.github.io/2018/02/08/English-Ruler-Problem/p1.png">
+<meta property="og:updated_time" content="2018-02-07T18:43:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="English Ruler Problem">
+<meta name="twitter:description" content="DS 수업 시간에 배운 English Ruler Problem을 Recursive한 방법으로 풀어보자. 수업시간엔 Java로 풀었지만, 복습 과정에선 알고리즘 구현을 우선순위에 두고 있으므로 Python을 사용해 문제를 해결했다. 이 문제의 핵심은 길이 L인 눈금을 기준으로, 위 아래에 길이가 L-1인 Interval이 와야 한다는 것이다. 이 때 길이가">
+<meta name="twitter:image" content="https://leesh6796.github.io/2018/02/08/English-Ruler-Problem/p1.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.png" />
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/titillium-web/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.0.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+        <script type="text/javascript">
+(function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-53347573-2', 'auto');
+ga('send', 'pageview');
+
+</script>
+    
+    
+
+
+</head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">홈</a>
+                                </li>
+                            
+                                        <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/">Algorithm</a><ul class="main-nav-list-child"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Algorithm/DS/">DS</a></li></ul></li></ul>
+                                    
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">About</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="검색" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '포스트',
+            PAGES: 'Pages',
+            CATEGORIES: '카테고리',
+            TAGS: '태그',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/Algorithm/">Algorithm</a><i class="icon fa fa-angle-right"></i><a class="page-title-link" href="/categories/Algorithm/DS/">DS</a>
+    </h1>
+</div>
+                        <div class="main-body-content">
+                            <article id="post-English-Ruler-Problem" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        English Ruler Problem
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                
+    <div class="article-date">
+        <a href="/2018/02/08/English-Ruler-Problem/" class="article-date">
+            <time datetime="2018-02-07T17:04:30.000Z" itemprop="datePublished">2018-02-08</time>
+        </a>
+    </div>
+
+                
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            <img src="/2018/02/08/English-Ruler-Problem/p1.png" alt="English Ruler Problem" title="English Ruler Problem">
+<p>DS 수업 시간에 배운 English Ruler Problem을 Recursive한 방법으로 풀어보자.</p>
+<p>수업시간엔 Java로 풀었지만, 복습 과정에선 알고리즘 구현을 우선순위에 두고 있으므로 Python을 사용해 문제를 해결했다.</p>
+<p>이 문제의 핵심은 길이 <code>L</code>인 눈금을 기준으로, 위 아래에 길이가 <code>L-1</code>인 Interval이 와야 한다는 것이다. 이 때 길이가 <code>L-1</code>인 Interval은 길이가 <code>L</code>인 두 눈금 사이에 그려져야 하는, 문제에서 요구하는 길이가 <code>L-1</code>인 눈금의 집합을 의미한다. 예를 들어 길이가 2인 Interval은 아래와 같다.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-</div><div class="line">--</div><div class="line">-</div></pre></td></tr></table></figure>
+<p>이제 recursive하게 문제를 해결하기 위해 base case를 잡자.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">-</div></pre></td></tr></table></figure>
+<p>위와 같은 형태의 base를 잡을 수 있고, 이를 recursive하게 2번 반복한다고 생각하면</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-</div><div class="line">--</div><div class="line">-</div></pre></td></tr></table></figure>
+<p>위와 같은 눈금을 그릴 수 있다. 이제 recursive step을 구상해보면, L이 1 이상일 때</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Interval Drawing(length L-1)</div><div class="line">LineDrawing(length L)</div><div class="line">Interval Drawing(length L-1)</div></pre></td></tr></table></figure>
+<p>위와 같은 형태의 recursive step을 밟아나가면 된다.</p>
+<p>전체 코드는 다음과 같다.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">drawRuler</span><span class="params">(num_max_bar : int, max_inch : int)</span>:</span> <span class="comment"># n개의 max line을 가진다 하자</span></div><div class="line">    <span class="comment"># num_max_bar는 자에서 최대 눈금의 길이를, max_inch는 자에서 표시하는 최대 인치를 말한다.</span></div><div class="line">    drawLabel(num_max_bar, <span class="number">0</span>) <span class="comment"># 가장 처음 0을 그린다.</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, max_inch + <span class="number">1</span>):</div><div class="line">        drawInterval(num_max_bar - <span class="number">1</span>) <span class="comment"># n-1 크기의 구간을 그린 다음</span></div><div class="line">        drawLabel(num_max_bar, i) <span class="comment"># n개의 눈금을 그리고, 라벨을 붙인다.</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">drawInterval</span><span class="params">(line_length : int)</span>:</span></div><div class="line">    <span class="keyword">if</span> line_length &gt; <span class="number">0</span>:</div><div class="line">        drawInterval(line_length - <span class="number">1</span>)</div><div class="line">        drawLine(line_length)</div><div class="line">        drawInterval(line_length - <span class="number">1</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">drawLabel</span><span class="params">(length : int, label : int)</span>:</span></div><div class="line">    <span class="comment"># 라벨이 있는 눈금을 그린다.</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</div><div class="line">        print(<span class="string">"-"</span>, end=<span class="string">''</span>)</div><div class="line"></div><div class="line">    <span class="keyword">if</span> label &gt;= <span class="number">0</span>:</div><div class="line">        <span class="comment"># Python 3.6 이상에서만 동작하는 formatting이다.</span></div><div class="line">        print(<span class="string">f" <span class="subst">&#123;label&#125;</span>"</span>, end=<span class="string">''</span>)</div><div class="line"></div><div class="line">    print()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">drawLine</span><span class="params">(length : int)</span>:</span> <span class="comment"># without label</span></div><div class="line">    <span class="comment"># 라벨이 없는 눈금을 그린다.</span></div><div class="line">    drawLabel(length, <span class="number">-1</span>)</div><div class="line"></div><div class="line"></div><div class="line">drawRuler(<span class="number">3</span>, <span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>실행 결과는 다음과 같다.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">--- 0</div><div class="line">-</div><div class="line">--</div><div class="line">-</div><div class="line">--- 1</div><div class="line">-</div><div class="line">--</div><div class="line">-</div><div class="line">--- 2</div></pre></td></tr></table></figure></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="https://leesh6796.github.io/2018/02/08/English-Ruler-Problem/" data-id="cjddbs5k70000xpcj7pciiivi" class="article-share-link"><i class="fa fa-share"></i>공유하기</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+    
+    </section>
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>팔로우:</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/leesh6796" target="_blank">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+    
+    <div class="widgets-container">
+        
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">최근 글</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/08/English-Ruler-Problem/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2018/02/08/English-Ruler-Problem/p1.png)" alt="English Ruler Problem" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/Algorithm/">Algorithm</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/Algorithm/DS/">DS</a></p>
+                            <p class="item-title"><a href="/2018/02/08/English-Ruler-Problem/" class="title">English Ruler Problem</a></p>
+                            <p class="item-date"><time datetime="2018-02-07T17:04:30.000Z" itemprop="datePublished">2018-02-08</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">카테고리</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/">Algorithm</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Algorithm/DS/">DS</a><span class="category-list-count">1</span></li></ul></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+
+            
+                
+
+            
+        
+    </div>
+</aside>
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2018 이상현</p>
+                <p>Powered by <a href="//hexo.io/" target="_blank">Hexo</a>. Theme by <a href="//github.com/ppoffice" target="_blank">PPOffice</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_shortname = 'memorial-library';
+    
+    
+    var disqus_url = 'https://leesh6796.github.io/2018/02/08/English-Ruler-Problem/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
